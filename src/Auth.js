@@ -1,20 +1,22 @@
-import React, { useState } from "react";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import React, { useState } from 'react';
 import { auth } from "./firebaseConfig";
+
+
 
 const Auth = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isLogin, setIsLogin] = useState(true);  // Переключение между входом и регистрацией
+  const [isLogin, setIsLogin] = useState(true);
 
   const handleAuth = async (e) => {
     e.preventDefault();
-
     try {
       if (isLogin) {
-        await auth.signInWithEmailAndPassword(email, password);
+        await signInWithEmailAndPassword(auth, email, password);
         alert("Logged in!");
       } else {
-        await auth.createUserWithEmailAndPassword(email, password);
+        await createUserWithEmailAndPassword(auth, email, password);
         alert("Account created!");
       }
     } catch (error) {
